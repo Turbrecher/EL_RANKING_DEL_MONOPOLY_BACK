@@ -1,0 +1,87 @@
+$xs: 0
+$sm: 576px
+$md: 768px
+$lg: 992px
+$xl: 1200px
+$xxl: 1400px
+
+
+nav
+  background: #c71814
+  position: sticky
+  top: 0
+
+  .links
+    display: grid
+    column-gap: 3rem
+
+  a
+    color: white
+
+  a:hover
+    color: #bbb8b8
+
+  .scrollMenu
+    display: none
+
+@media screen and (width > $xs) and (width < $md)
+  nav
+    overflow: auto
+
+    .scrollMenu
+      display: flex
+      gap: 2rem
+      padding: 1rem
+      overflow: auto
+      white-space: nowrap
+
+      a
+        font-size: 1.5rem
+        text-decoration: none
+
+    .btnLinks
+      display: block
+      margin: 1rem
+      width: fit-content
+
+      i
+        border: solid #333333
+        border-radius: 0.5rem
+        color: #333333
+        font-size: 3rem
+        padding: 1rem
+
+    .links
+      background: #c71814
+      padding: 1rem
+      display: none
+      justify-content: center
+      opacity: 0
+      transition: opacity 2s
+
+
+      a
+        border: solid #333333
+        border-radius: 0.5rem
+        text-decoration: none
+        font-size: 2rem
+        margin: 1rem 0
+        padding: 1rem
+
+
+@media screen and (width >= $md)
+  nav
+    display: grid
+    justify-content: center
+
+    .links
+      align-items: center
+      grid-template-columns: auto auto auto auto
+      gap: 3rem
+      padding: 1rem
+      justify-content: center
+
+    a
+      text-align: center
+      font-size: 1.5rem
+      text-decoration: none

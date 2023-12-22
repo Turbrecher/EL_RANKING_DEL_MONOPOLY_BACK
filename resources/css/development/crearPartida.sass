@@ -1,0 +1,39 @@
+$xs: 0
+$sm: 576px
+$md: 768px
+$lg: 992px
+$xl: 1200px
+$xxl: 1400px
+
+.crearPartida
+  display: grid
+  justify-content: center
+  align-items: center
+  .formPartida
+    width: 100%
+    display: grid
+
+@media screen and (width > $xs) and (width < $lg)
+  .crearPartida
+    grid-template-columns: auto
+    grid-template-rows: auto
+    .imagenCrearPartida
+      display: grid
+      justify-content: center
+      width: 10rem
+      margin: 0 auto
+      img
+        width: 100%
+
+
+@media screen and (width > $lg)
+  .crearPartida
+    grid-template-columns: fit-content(100%) fit-content(100%)
+    column-gap: 1rem
+    .imagenCrearPartida
+      display: grid
+      justify-content: center
+      width: 30rem
+      margin: 0 auto
+      img
+        width: 100%

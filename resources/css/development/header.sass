@@ -1,0 +1,71 @@
+$xs: 0px
+$sm: 576px
+$md: 768px
+$lg: 992px
+$xl: 1200px
+$xxl: 1400px
+
+//ESTILO GENERAL PARA TODAS LAS PANTALLAS
+header
+  background: #5991b0
+  color: white
+  a
+    color: white
+    text-decoration: none
+
+//ESTILO PARA PANTALLAS EXTRA PEQUEÑAS
+@media screen and (width > $xs) and (width <= $sm)
+  header
+    display: grid
+    padding: 1rem
+    justify-content: center
+
+    .logo
+      margin: 0 auto
+      width: 50%
+
+      img
+        height: auto
+        width: 100%
+
+    h1
+      text-align: center
+      font-size: 2rem
+
+//ESTILO PARA PANTALLAS PEQUEÑAS
+@media screen and (width > $sm) and (width <= $md)
+  header
+    display: grid
+    padding: 1rem
+    justify-content: center
+
+    .logo
+      margin: 0 auto
+      width: 50%
+
+      img
+        height: auto
+        width: 100%
+
+    h1
+      text-align: center
+      font-size: 3rem
+
+//ESTILO PARA PANTALLAS MÁS GRANDES QUE UN MOVIL
+@media screen and (width > $md)
+  header
+    display: grid
+    padding: 1rem
+    justify-content: center
+
+    .logo
+      margin: 0 auto
+      width: 20%
+
+      img
+        height: auto
+        width: 100%
+
+    h1
+      text-align: center
+      font-size: 2rem

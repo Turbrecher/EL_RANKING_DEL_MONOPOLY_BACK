@@ -1,0 +1,32 @@
+$xs: 0
+$sm: 576px
+$md: 768px
+$lg: 992px
+$xl: 1200px
+$xxl: 1400px
+
+.puntuaciones
+  display: grid
+  row-gap: 2rem
+  justify-content: center
+  max-width: 80%
+  margin: 0 auto
+
+.partidas
+  display: flex
+  overflow-x: auto
+  gap: 2rem
+  padding-bottom: 1rem
+
+  a
+    text-decoration: none
+
+.partida
+  overflow-x: auto
+
+//ESTILO PARA PANTALLAS PEQUEÑAS
+@media screen and (width > $xs) and (width < $md)
+  .torneo
+    display: block
+    width: 100%
+    overflow-x: auto

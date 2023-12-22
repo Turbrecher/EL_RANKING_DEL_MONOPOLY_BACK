@@ -1,0 +1,43 @@
+$xs: 0
+$sm: 576px
+$md: 768px
+$lg: 992px
+$xl: 1200px
+$xxl: 1400px
+
+table
+  color: white
+  border-collapse: collapse
+  background: #5991b0
+  font-size: 2rem
+  text-align: center
+  margin: 0 auto
+
+
+  thead
+    background: #c71814
+
+    th
+      border: solid #cc6868
+      padding: 1rem
+
+
+  tbody tr:nth-child(even)
+    background: #66a3c0
+
+  tbody
+    tr
+      transition: background-color 0.5s
+
+    tr:hover
+      background-color: #434443
+      transition: background-color 0.5s
+
+    td
+      border: solid #89bdd9
+      padding: 1rem
+
+
+@media screen and (width < $md)
+  table
+    width: 100%

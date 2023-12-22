@@ -1,0 +1,62 @@
+$xs: 0
+$sm: 576px
+$md: 768px
+$lg: 992px
+$xl: 1200px
+$xxl: 1400px
+
+//ESTILO GENERAL PARA TODAS LAS PANTALLAS
+footer
+  background: #181616
+  color: white
+  min-height: 20rem
+
+@media screen and (width>$xs) and (width<$sm)
+  footer
+    .redesSociales
+      margin: 3rem 0
+      row-gap: 3rem
+      display: grid
+      grid-template-rows: auto
+      grid-template-columns: auto auto
+      justify-content: space-evenly
+
+      i
+        color: white
+        font-size: 5rem
+
+      i:hover
+        color: #5991b0
+
+    .info
+      display: grid
+      height: 5rem
+      justify-content: center
+      align-items: center
+      text-align: center
+      padding: 3rem 1rem
+
+//ESTILO PARA PANTALLAS A PARTIR DE 768PX
+@media screen and (width >= $sm)
+  footer
+    .redesSociales
+      margin: 3rem 0
+      display: grid
+      grid-template-rows: auto
+      grid-template-columns: auto auto auto auto auto
+      justify-content: space-evenly
+
+      i
+        color: white
+        font-size: 5rem
+
+      i:hover
+        color: #5991b0
+
+    .info
+      display: grid
+      height: 5rem
+      justify-content: center
+      align-items: center
+      text-align: center
+      padding: 0 1rem

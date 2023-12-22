@@ -1,0 +1,25 @@
+$xs: 0
+$sm: 576px
+$md: 768px
+$lg: 992px
+$xl: 1200px
+$xxl: 1400px
+
+@media screen and (width >= $xs) and (width < $sm)
+  .posicionesPartida
+    form
+      grid-template-columns: auto
+      gap: 2rem
+      width: 90%
+
+@media screen and (width >= $sm) and (width < $md)
+  .posicionesPartida
+    form
+      grid-template-columns: auto auto
+      gap: 2rem
+
+@media screen and (width >= $md)
+  .posicionesPartida
+    form
+      grid-template-columns: auto auto auto
+      gap: 2rem
