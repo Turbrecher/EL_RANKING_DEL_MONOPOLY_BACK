@@ -22,7 +22,7 @@
 
 
             <div class="formJugador">
-                <form action="crearPartida.php">
+                <form method="post" action="/crear/jugador">
                     <div class="form-control">
                         <label for="nombre">Nombre</label>
                         <input autocomplete="off" type="text" name="nombre" id="nombre">

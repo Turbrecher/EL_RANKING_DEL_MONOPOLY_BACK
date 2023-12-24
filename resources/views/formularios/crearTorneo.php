@@ -24,7 +24,7 @@
             </div>
 
             <div class="formTorneo">
-                <form action="crearPartida.php">
+                <form method="post" action="/crear/torneo">
                     <div class="form-control">
                         <label for="nombre">Nombre</label>
                         <input autocomplete="off" type="text" name="nombre" id="nombre">

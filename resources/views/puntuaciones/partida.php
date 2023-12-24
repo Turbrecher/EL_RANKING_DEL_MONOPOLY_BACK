@@ -17,7 +17,6 @@
         </div>
 
         <div class="partida">
-
             <div class="tabla">
                 <table>
 
@@ -32,35 +31,19 @@
 
                     <tbody>
 
-                    <tr>
-                        <td>Juan Carlos</td>
-                        <td>21</td>
-                    </tr>
+                    <?php
+                    foreach ($data as $partida) {
 
-                    <tr>
-                        <td>Jose</td>
-                        <td>15</td>
-                    </tr>
 
-                    <tr>
-                        <td>Octavio</td>
-                        <td>10</td>
-                    </tr>
+                        ?>
+                        <tr>
+                            <td><?php echo $partida->nick_jugador ?></td>
+                            <td><?php echo $partida->puntos ?></td>
+                        </tr>
 
-                    <tr>
-                        <td>Gori</td>
-                        <td>6</td>
-                    </tr>
-
-                    <tr>
-                        <td>Victor</td>
-                        <td>3</td>
-                    </tr>
-
-                    <tr>
-                        <td>Mari</td>
-                        <td>1</td>
-                    </tr>
+                        <?php
+                    }
+                    ?>
 
                     </tbody>
 

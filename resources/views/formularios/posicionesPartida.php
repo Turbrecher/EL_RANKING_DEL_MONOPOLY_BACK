@@ -19,79 +19,34 @@
         <div class="posicionesPartida">
 
             <div class="formPosicionesPartida">
-                <form action="reglas.php">
+                <form method="post" action="/crear/partida">
 
-                    <div class="form-control">
-                        <label for="primerLugar">1º puesto</label>
-                        <select class="selector" name="primerLugar" id="primerLugar">
-                            <option value="alberto">Alberto</option>
-                            <option value="juan carlos">Juan Carlos</option>
-                            <option value="gori">Gori</option>
-                            <option value="victor">Victor</option>
-                            <option value="mari">Mari</option>
-                            <option value="jose">Jose</option>
-                        </select>
-                    </div>
 
-                    <div class="form-control">
-                        <label for="segundoLugar">2º puesto</label>
-                        <select class="selector" name="segundoLugar" id="segundoLugar">
-                            <option value="alberto">Alberto</option>
-                            <option value="juan carlos">Juan Carlos</option>
-                            <option value="gori">Gori</option>
-                            <option value="victor">Victor</option>
-                            <option value="mari">Mari</option>
-                            <option value="jose">Jose</option>
-                        </select>
-                    </div>
+                    <?php
+                    for ($i = 0; $i < $data[0]['nJugadores']; $i++) { ?>
 
-                    <div class="form-control">
-                        <label for="tercerLugar">3º puesto</label>
-                        <select class="selector" name="tercerLugar" id="tercerLugar">
-                            <option value="alberto">Alberto</option>
-                            <option value="juan carlos">Juan Carlos</option>
-                            <option value="gori">Gori</option>
-                            <option value="victor">Victor</option>
-                            <option value="mari">Mari</option>
-                            <option value="jose">Jose</option>
-                        </select>
-                    </div>
 
-                    <div class="form-control">
-                        <label for="cuartoLugar">4º puesto</label>
-                        <select class="selector" name="cuartoLugar" id="cuartoLugar">
-                            <option value="alberto">Alberto</option>
-                            <option value="juan carlos">Juan Carlos</option>
-                            <option value="gori">Gori</option>
-                            <option value="victor">Victor</option>
-                            <option value="mari">Mari</option>
-                            <option value="jose">Jose</option>
-                        </select>
-                    </div>
+                        <div class="form-control">
+                            <label for=<?php echo('posicion' . $i) ?>><?php echo $i + 1 ?>º puesto</label>
+                            <select class="selector"
+                                    name=<?php echo($i+1) ?> id=<?php echo('posicion' . $i) ?>>
+                                <option selected>Elija jugador</option>
+                                <?php
+                                foreach ($data[1] as $jugador) {
+                                    echo "<option value='$jugador->nick'>$jugador->nick</option>";
+                                }
+                                ?>>
+                            </select>
+                        </div>
 
-                    <div class="form-control">
-                        <label for="quintoLugar">5º puesto</label>
-                        <select class="selector" name="quintoLugar" id="quintoLugar">
-                            <option value="alberto">Alberto</option>
-                            <option value="juan carlos">Juan Carlos</option>
-                            <option value="gori">Gori</option>
-                            <option value="victor">Victor</option>
-                            <option value="mari">Mari</option>
-                            <option value="jose">Jose</option>
-                        </select>
-                    </div>
+                    <?php }
+                    ?>
 
-                    <div class="form-control">
-                        <label for="sextoLugar">6º puesto</label>
-                        <select class="selector" name="sextoLugar" id="sextoLugar">
-                            <option value="alberto">Alberto</option>
-                            <option value="juan carlos">Juan Carlos</option>
-                            <option value="gori">Gori</option>
-                            <option value="victor">Victor</option>
-                            <option value="mari">Mari</option>
-                            <option value="jose">Jose</option>
-                        </select>
-                    </div>
+
+                    <input type="hidden" name="nombre" value='<?php echo($data[0]['nombre'])?>'>
+                    <input type="hidden" name="torneo" value=<?php echo($data[0]['torneo']) ?>>
+                    <input type="hidden" name="fecha" value=<?php echo($data[0]['fecha']) ?>>
+                    <input type="hidden" name="nJugadores" value=<?php echo($data[0]['nJugadores']) ?>>
 
                     <div class="submitBox">
                         <input class="submit" type="submit" value="Crear Partida">

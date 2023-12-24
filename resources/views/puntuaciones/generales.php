@@ -12,12 +12,14 @@
     <?php include('../resources/views/elementos_compartidos/nav.php') ?>
 
     <main>
-
-
         <div class="puntuaciones">
 
+            <?php
+            if (sizeof($data[0]) > 0){
+            ?>
+
             <div class="titulo">
-                <h1>PUNTUACIONES TORNEO</h1>
+                <h1>PUNTUACIONES TORNEO <?php ?></h1>
             </div>
 
             <div class="torneo">
@@ -25,41 +27,24 @@
                     <thead>
                     <tr>
                         <th>Jugador</th>
-                        <th>Partidas Ganadas</th>
                         <th>Puntos</th>
                     </tr>
                     </thead>
 
                     <tbody>
-                    <tr>
-                        <td>Juan Carlos</td>
-                        <td>5</td>
-                        <td>200</td>
-                    </tr>
+                    <?php
+                    foreach ($data[0] as $jugador) {
 
-                    <tr>
-                        <td>Juan Carlos</td>
-                        <td>5</td>
-                        <td>200</td>
-                    </tr>
 
-                    <tr>
-                        <td>Juan Carlos</td>
-                        <td>5</td>
-                        <td>200</td>
-                    </tr>
+                        ?>
+                        <tr>
+                            <td><?php echo $jugador->nick_jugador ?></td>
+                            <td><?php echo $jugador->puntos ?></td>
+                        </tr>
 
-                    <tr>
-                        <td>Juan Carlos</td>
-                        <td>5</td>
-                        <td>200</td>
-                    </tr>
-
-                    <tr>
-                        <td>Juan Carlos</td>
-                        <td>5</td>
-                        <td>200</td>
-                    </tr>
+                        <?php
+                    }
+                    ?>
                     </tbody>
 
 
@@ -71,8 +56,13 @@
                 <h1>PARTIDAS</h1>
             </div>
 
+            <?php
+            foreach ($data[1] as $partida){
+
+
+            ?>
             <div class="partidas">
-                <a href="/puntuaciones/partida">
+                <a href="/puntuaciones/partida/<?php echo $partida->id ?>">
                     <table>
 
                         <thead>
@@ -83,116 +73,29 @@
 
 
                         <tbody>
-                        <td>Cry Macho</td>
-                        <td>12-11-2023</td>
-                        <td>Juan Carlos</td>
+                        <td><?php echo $partida->nombre ?></td>
+                        <td><?php echo $partida->fecha ?></td>
+                        <td><?php echo $partida->ganador ?></td>
                         </tbody>
 
 
                     </table>
                 </a>
 
-                <a href="/puntuaciones/partida">
-                    <table>
+                <?php
+                }
+                ?>
 
-                        <thead>
-                        <th>Nombre</th>
-                        <th>Fecha</th>
-                        <th>Ganador</th>
-                        </thead>
-
-
-                        <tbody>
-                        <td>Cry Macho</td>
-                        <td>12-11-2023</td>
-                        <td>Juan Carlos</td>
-                        </tbody>
-
-
-                    </table>
-                </a>
-
-                <a href="/puntuaciones/partida">
-                    <table>
-
-                        <thead>
-                        <th>Nombre</th>
-                        <th>Fecha</th>
-                        <th>Ganador</th>
-                        </thead>
-
-
-                        <tbody>
-                        <td>Cry Macho</td>
-                        <td>12-11-2023</td>
-                        <td>Juan Carlos</td>
-                        </tbody>
-
-
-                    </table>
-                </a>
-
-                <a href="/puntuaciones/partida">
-                    <table>
-
-                        <thead>
-                        <th>Nombre</th>
-                        <th>Fecha</th>
-                        <th>Ganador</th>
-                        </thead>
-
-
-                        <tbody>
-                        <td>Cry Macho</td>
-                        <td>12-11-2023</td>
-                        <td>Juan Carlos</td>
-                        </tbody>
-
-
-                    </table>
-                </a>
-
-                <a href="/puntuaciones/partida">
-                    <table>
-
-                        <thead>
-                        <th>Nombre</th>
-                        <th>Fecha</th>
-                        <th>Ganador</th>
-                        </thead>
-
-
-                        <tbody>
-                        <td>Cry Macho</td>
-                        <td>12-11-2023</td>
-                        <td>Juan Carlos</td>
-                        </tbody>
-
-
-                    </table>
-                </a>
-
-                <a href="/puntuaciones/partida">
-                    <table>
-
-                        <thead>
-                        <th>Nombre</th>
-                        <th>Fecha</th>
-                        <th>Ganador</th>
-                        </thead>
-
-
-                        <tbody>
-                        <td>Cry Macho</td>
-                        <td>12-11-2023</td>
-                        <td>Juan Carlos</td>
-                        </tbody>
-
-
-                    </table>
-                </a>
-
-
+                <?php
+                }else{
+                //LE DECIMOS AL USUARIO QUE CREE UNA PARTIDA.
+                echo "<h1>Aun no se han creado partidas, crea una!</h1>";
+                echo "<form action='/crear/partida'>
+                        <div class='submitBox'>
+                            <input class='submit' type='submit' value='Crear Partida'></form>
+                        </div>";
+                }
+                ?>
             </div>
 
         </div>

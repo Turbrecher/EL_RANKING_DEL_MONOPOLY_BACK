@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <?php include('../resources/views/elementos_compartidos/head.php') ?>
-    <script type="module" src="<?php echo $public_folder?>/js/validarCreacionPartida.js"></script>
+    <script type="module" src="<?php echo $public_folder ?>/js/validarCreacionPartida.js"></script>
     <title>Crear Partida Monopoly Competicion</title>
 </head>
 <body>
@@ -19,7 +19,7 @@
 
         <div class="crearPartida">
             <div class="imagenCrearPartida">
-                <img src="<?php echo $public_folder?>/images/imagen_crear_partida.png" alt="">
+                <img src="<?php echo $public_folder ?>/images/imagen_crear_partida.png" alt="">
             </div>
 
             <div class="formPartida">
@@ -47,12 +47,11 @@
                     <div class="form-control">
                         <label for="torneo">Torneo</label>
                         <select name="torneo" id="torneo">
-                            <option value="1">Torneo 1</option>
-                            <option value="2">Torneo 2</option>
-                            <option value="3">Torneo 3</option>
-                            <option value="4">Torneo 4</option>
-                            <option value="5">Torneo 5</option>
-                            <option value="6">Torneo 6</option>
+                            <?php
+                            foreach ($data as $torneo) {
+                                echo "<option value=$torneo->id>$torneo->nombre</option>";
+                            }
+                            ?>
                         </select>
                     </div>
 

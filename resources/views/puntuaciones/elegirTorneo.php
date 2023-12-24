@@ -23,17 +23,12 @@
             </div>
 
             <div class="torneos">
-                <a href="/puntuaciones/generales">Torneo 1</a>
-                <a href="/puntuaciones/generales">Torneo 2</a>
-                <a href="/puntuaciones/generales">Torneo 3</a>
-                <a href="/puntuaciones/generales">Torneo 4</a>
-                <a href="/puntuaciones/generales">Torneo 5</a>
-                <a href="/puntuaciones/generales">Torneo 6</a>
-                <a href="/puntuaciones/generales">Torneo 7</a>
-                <a href="/puntuaciones/generales">Torneo 8</a>
-                <a href="/puntuaciones/generales">Torneo 9</a>
-                <a href="/puntuaciones/generales">Torneo 10</a>
-                <a href="/puntuaciones/generales">Torneo 11</a>
+                <?php
+                foreach ($data as $torneo) {
+                    ?>
+                    <a href="/puntuaciones/generales/<?php echo $torneo->id ?>"><?php echo $torneo->nombre ?></a>
+                <?php }
+                ?>
             </div>
         </div>
     </main>

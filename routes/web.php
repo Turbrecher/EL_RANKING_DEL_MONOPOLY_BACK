@@ -8,16 +8,19 @@ use App\Controllers\ScoreController;
 //Vista HOME
 Route::get('/', [HomeController::class, 'home']);
 
-//Vistas PUNTUACIONES
+//Vistas puntuaciones
 Route::get('/puntuaciones/elegirTorneo', [ScoreController::class, 'elegirTorneo']);
-Route::get('/puntuaciones/generales', [ScoreController::class, 'puntuacionesGenerales']);
-Route::get('/puntuaciones/partida', [ScoreController::class, 'puntuacionesPartida']);
+Route::get('/puntuaciones/generales/:id', [ScoreController::class, 'puntuacionesGenerales']);
+Route::get('/puntuaciones/partida/:id', [ScoreController::class, 'puntuacionesPartida']);
 
-
-//Vistas FORMULARIOS
+//Vistas Formularios
 Route::get('/crear/torneo', [FormController::class, 'vistaCrearTorneo']);
 Route::get('/crear/partida', [FormController::class, 'vistaCrearPartida']);
 Route::get('/crear/partida/posiciones', [FormController::class, 'vistaCrearPartidaPosiciones']);
 Route::get('/crear/jugador', [FormController::class, 'vistaCrearJugador']);
+//Acciones Formularios
+Route::post('/crear/jugador', [FormController::class, 'crearJugador']);
+Route::post('/crear/torneo', [FormController::class, 'crearTorneo']);
+Route::post('/crear/partida', [FormController::class, 'crearPartida']);
 
 Route::dispatch();

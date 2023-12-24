@@ -781,6 +781,7 @@ table tbody td {
 @media screen and (width >= 768px) {
   .posicionesPartida form {
     grid-template-columns: auto auto auto;
+    align-items: end;
     gap: 2rem;
   }
 }
