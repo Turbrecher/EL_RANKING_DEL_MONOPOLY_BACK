@@ -4,11 +4,15 @@ namespace App\Controllers;
 
 class HomeController extends Controller
 {
-    // La página principal mostrará un listado de usuarios
-    public function home(): string | false
+
+    public function home(): string|false
     {
-        session_start();
-        return $this->view('home'); // Seleccionamos una vista (método padre)
+        return $this->view('home');
+    }
+
+    public function error(): string
+    {
+        return $this->view('error');
     }
 
 

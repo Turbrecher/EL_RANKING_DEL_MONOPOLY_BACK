@@ -7,6 +7,12 @@ use App\DataClasses\Jugador;
 
 class JugadorModel extends Model
 {
+    /**
+     * Metodo que se encarga de insertar el jugador introducido como parametro
+     * en la base de datos.
+     * @param Jugador $jugador
+     * @return bool
+     */
     public function insertarJugador(Jugador $jugador): bool
     {
         //CREAMOS LAS 3 VARIABLES DE DATOS QUE REPRESENTAN A UN JUGADOR.
@@ -33,24 +39,36 @@ class JugadorModel extends Model
 
     }
 
-    public function getPartidasGanadas(int $idTorneo, string $nickJugador): int
-    {
-        $statement = $this->connection->prepare('SELECT COUNT(id) FROM partida WHERE ganador = :nickJugador and id_torneo = :idTorneo');
-        $statement->bindParam(":nickJugador", $nickJugador);
-        $statement->bindParam(":idTorneo", $idTorneo);
-        $statement->execute();
-
-        if (!$statement->fetch(\PDO::FETCH_NUM)[0]) {
-            return 0;
-        }
-        return $statement->fetch(\PDO::FETCH_NUM)[0];
-
-    }
-
+    /**
+     * Metodo que obtiene todos los jugadores existentes en la base de datos.
+     * @return array
+     */
     public function getJugadores(): array
     {
         $statement = $this->connection->query('SELECT id, nick FROM jugador');
 
         return $statement->fetchAll(\PDO::FETCH_OBJ);
+    }
+
+    /**
+     * Metodo que comprueba si el jugador con el nick introducido como parametro ya existe.
+     * @param string $nick el nick del jugador.
+     * @return bool si existe o no.
+     */
+    public function jugadorExiste(string $nick): bool
+    {
+        $statement = $this->connection->prepare('SELECT COUNT(id) FROM jugador where nick = :nick');
+        $statement->bindParam('nick', $nick);
+        $statement->execute();
+
+        $result = $statement->fetch(\PDO::FETCH_NUM)[0];
+
+        if ($result > 0) {
+            return true;
+        }
+
+
+        return false;
+
     }
 }

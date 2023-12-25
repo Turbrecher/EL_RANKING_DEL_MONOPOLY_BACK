@@ -13,26 +13,75 @@ use App\Models\PuntuacionPartidaModel;
 use App\Models\PuntuacionTorneoModel;
 use App\Models\TorneoModel;
 use App\UsefulClasses\CalculadoraPuntos;
+use App\UsefulClasses\ContadorCoincidencias;
 
 class FormController extends Controller
 {
+    /**
+     * Metodo que carga la vista del formulario de creacion de partidas.
+     * @return string (la vista)
+     */
     public function vistaCrearPartida(): string
     {
+        //Hay que obtener los torneos que existen para rellenar el elemento select del formulario.
         $torneoModel = new TorneoModel();
         $torneos = $torneoModel->getTorneos();
 
         return $this->view('formularios/crearPartida', $torneos);
     }
 
+    /**
+     * Metodo que se encarga de crear la partida y las tablas relacionadas con ella (puntuaciones)
+     * @return string (la vista)
+     */
     public function crearPartida(): string
     {
+        //Comprobamos que hayamos recibido los 4 parametros del post.
+        $POST_RECIBIDO = !empty($_POST['nombre']) && !empty($_POST['fecha']) && !empty($_POST['torneo']) && !empty($_POST['nJugadores']);
+        if (!$POST_RECIBIDO) {
+            return $this->view("/error");
+        }
 
-        //crear partida.
+        //Validamos el post.
+        $validador = new ValidadorCampos();
+        if (!$validador->registroPartidaValido($_POST)) {
+            return $this->view("/error");
+        }
+
+        //Intentamos crear la partida.
         $partidaModel = new PartidaModel();
         $partida = new Partida($_POST['nombre'], $_POST['fecha'], $_POST['1'], $_POST['torneo']);
-        $partidaModel->insertarPartida($partida);
 
+        //Comprobamos que el jugador existe y lo almacenamos en un array de nicks.
+        $jugadorModel = new JugadorModel();
+        $nicksJugadores = [];
+        for ($i = 1; $i <= $_POST['nJugadores']; $i++) {
 
+            if (!$jugadorModel->jugadorExiste($_POST[$i])) {
+                return $this->view("/error");;
+            }
+
+            $nicksJugadores[] = $_POST[$i];
+        }
+
+        //Comprobamos que ningun nick se repita.
+        for ($i = 1; $i <= $_POST['nJugadores']; $i++) {
+            if (ContadorCoincidencias::contarCoincidencias($_POST[$i], $nicksJugadores) > 1) {
+                return $this->view("/error");
+            }
+        }
+
+        //Si la partida ya existe, vista de error.
+        if ($partidaModel->partidaExiste($partida->getNombre())) {
+            return $this->view("/error");
+        }
+
+        //Si hay alguna excepcion adicional al intentar insertarlo en la base de datos, vista de error de tambien.
+        if (!$partidaModel->insertarPartida($partida)) {
+            return $this->view("/error");
+        }
+
+        //Ahora, por cada jugador que participa, insertamos y actualizamos puntuaciones.
         for ($i = 1; $i <= $_POST['nJugadores']; $i++) {
 
             //crear puntuacion partida por cada jugador.
@@ -54,7 +103,7 @@ class FormController extends Controller
         }
 
 
-        return $this->view('home');
+        return $this->view('/puntuaciones/elegirTorneo');
 
 
     }
@@ -86,13 +135,13 @@ class FormController extends Controller
         //Comprobamos que todos los datos del post se hayan recibido (LOS 3 CAMPOS DE LA BBDD SON NOT NULL).
         $POST_RECIBIDO = !empty($_POST['nombre']) && !empty($_POST['fInicio']) && !empty($_POST['fFin']);
         if (!$POST_RECIBIDO) {
-            return $this->view('error');
+            return $this->view('/error');
         }
 
         //Comprobamos que los datos introducidos en el formulario son validos.
         $validador = new ValidadorCampos();
         if (!$validador->registroTorneoValido($_POST)) {
-            return $this->view('error');
+            return $this->view('/error');
         }
 
         //Intentamos insertar los datos en la base de datos.
@@ -119,23 +168,27 @@ class FormController extends Controller
      */
     public function crearJugador(): string
     {
+        $jugadorModel = new JugadorModel();
         //Comprobamos que todos los datos del post se hayan recibido (LOS 3 CAMPOS DE LA BBDD SON NOT NULL).
         $POST_RECIBIDO = !empty($_POST['nombre']) && !empty($_POST['apellidos']) && !empty($_POST['nick']);
         if (!$POST_RECIBIDO) {
-            return $this->view('error');
+            return $this->view('/error');
         }
 
         //Comprobamos que los datos introducidos en el formulario son validos.
         $validador = new ValidadorCampos();
         if (!$validador->registroUsuarioValido($_POST)) {
-            return $this->view('error');
+            return $this->view('/error');
+        }
+
+        if ($jugadorModel->jugadorExiste($_POST['nick'])) {
+            return $this->view('/error');
         }
 
         //Intentamos insertar los datos en la base de datos.
-        $jugadorModel = new JugadorModel();
         $jugador = new Jugador($_POST['nombre'], $_POST['apellidos'], $_POST['nick']);
         if (!$jugadorModel->insertarJugador($jugador)) {
-            return $this->view('error');
+            return $this->view('/error');
         }
 
 

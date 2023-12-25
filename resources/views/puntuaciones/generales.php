@@ -56,41 +56,43 @@
                 <h1>PARTIDAS</h1>
             </div>
 
-            <?php
-            foreach ($data[1] as $partida){
-
-
-            ?>
             <div class="partidas">
-                <a href="/puntuaciones/partida/<?php echo $partida->id ?>">
-                    <table>
-
-                        <thead>
-                        <th>Nombre</th>
-                        <th>Fecha</th>
-                        <th>Ganador</th>
-                        </thead>
-
-
-                        <tbody>
-                        <td><?php echo $partida->nombre ?></td>
-                        <td><?php echo $partida->fecha ?></td>
-                        <td><?php echo $partida->ganador ?></td>
-                        </tbody>
-
-
-                    </table>
-                </a>
-
                 <?php
+
+                foreach ($data[1] as $partida) {
+
+
+                    ?>
+
+                    <a href="/puntuaciones/partida/<?php echo $partida->id ?>">
+                        <table>
+
+                            <thead>
+                            <th>Nombre</th>
+                            <th>Fecha</th>
+                            <th>Ganador</th>
+                            </thead>
+
+
+                            <tbody>
+                            <td><?php echo $partida->nombre ?></td>
+                            <td><?php echo $partida->fecha ?></td>
+                            <td><?php echo $partida->ganador ?></td>
+                            </tbody>
+
+
+                        </table>
+                    </a>
+
+                    <?php
                 }
                 ?>
 
                 <?php
-                }else{
-                //LE DECIMOS AL USUARIO QUE CREE UNA PARTIDA.
-                echo "<h1>Aun no se han creado partidas, crea una!</h1>";
-                echo "<form action='/crear/partida'>
+                } else {
+                    //LE DECIMOS AL USUARIO QUE CREE UNA PARTIDA.
+                    echo "<h1>Aun no se han creado partidas, crea una!</h1>";
+                    echo "<form action='/crear/partida'>
                         <div class='submitBox'>
                             <input class='submit' type='submit' value='Crear Partida'></form>
                         </div>";

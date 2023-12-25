@@ -5,8 +5,9 @@ use Lib\Route;
 use App\Controllers\HomeController;
 use App\Controllers\ScoreController;
 
-//Vista HOME
+//Vista HOME y ERROR
 Route::get('/', [HomeController::class, 'home']);
+Route::get('/error', [HomeController::class, 'error']);
 
 //Vistas puntuaciones
 Route::get('/puntuaciones/elegirTorneo', [ScoreController::class, 'elegirTorneo']);
