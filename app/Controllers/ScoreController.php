@@ -23,7 +23,7 @@ class ScoreController extends Controller
         $partidaModel = new PartidaModel();
         $jugadorModel = new JugadorModel();
         $puntuacionesGenerales = $puntuacionTorneoModel->getPuntuacionesTorneo($idTorneo);
-        $partidas = $partidaModel->getPartidas($idTorneo);
+        $partidas = $partidaModel->getPartidasDeTorneo($idTorneo);
         return $this->view('/puntuaciones/generales', [$puntuacionesGenerales, $partidas]); // Seleccionamos una vista (método padre)
     }
 

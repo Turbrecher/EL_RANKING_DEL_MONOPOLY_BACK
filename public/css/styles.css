@@ -785,5 +785,11 @@ table tbody td {
     gap: 2rem;
   }
 }
+table tbody tr .trash a {
+  color: white;
+}
+table tbody tr .trash a:hover {
+  color: #cb3333;
+}
 
 /*# sourceMappingURL=styles.css.map */

@@ -38,4 +38,39 @@ class PuntuacionPartidaModel extends Model
 
         return $statement->fetchAll(\PDO::FETCH_OBJ);
     }
+
+
+    public function deletePuntuacionPartida(string $nick_jugador, int $id_partida = -1): bool
+    {
+        if ($id_partida === -1) {
+            $statement = $this->connection->prepare('DELETE FROM puntuacion_partida where nick_jugador = :nick_jugador');
+            $statement->bindParam(":nick_jugador", $nick_jugador);
+            return $statement->execute();
+        }
+
+        $statement = $this->connection->prepare('DELETE FROM puntuacion_partida where nick_jugador = :nick_jugador and id_partida = :id_partida');
+        $statement->bindParam(":nick_jugador", $nick_jugador);
+        $statement->bindParam(":id_partida", $id_partida);
+        return $statement->execute();
+
+
+    }
+
+    public function getPartidasJugadas(string $nick_jugador): int
+    {
+        $statement = $this->connection->prepare('SELECT COUNT(nick_jugador) FROM puntuacion_partida WHERE nick_jugador = :nick_jugador');
+        $statement->bindParam(":nick_jugador", $nick_jugador);
+        $statement->execute();
+
+        return $statement->fetch(\PDO::FETCH_NUM)[0];
+    }
+
+    public function getPartidasEnTorneo(int $id_torneo): int
+    {
+        $statement = $this->connection->prepare('SELECT COUNT(id) FROM puntuacion_partida WHERE nick_jugador = :nick_jugador');
+        $statement->bindParam(":nick_jugador", $nick_jugador);
+        $statement->execute();
+
+        return $statement->fetch(\PDO::FETCH_NUM)[0];
+    }
 }

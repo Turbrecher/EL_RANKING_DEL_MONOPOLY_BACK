@@ -53,11 +53,18 @@ class PartidaModel extends Model
      * @param int $idTorneo
      * @return array
      */
-    public function getPartidas(int $idTorneo): array
+    public function getPartidasDeTorneo(int $idTorneo): array
     {
         $statement = $this->connection->prepare('SELECT id,nombre,fecha,ganador FROM partida where id_torneo = :idTorneo');
         $statement->bindParam(":idTorneo", $idTorneo);
         $statement->execute();
+        return $statement->fetchAll(\PDO::FETCH_OBJ);
+    }
+
+    public function getPartidas(): array
+    {
+        $statement = $this->connection->query('SELECT id,nombre,fecha,ganador,id_torneo FROM PARTIDA');
+
         return $statement->fetchAll(\PDO::FETCH_OBJ);
     }
 
@@ -81,6 +88,13 @@ class PartidaModel extends Model
 
     }
 
+    public function deletePartida($id): bool
+    {
+        $statement = $this->connection->prepare('DELETE FROM partida where id = :id');
+        $statement->bindParam(":id", $id);
+        return $statement->execute();
+    }
+
 
     public function partidaExiste(string $nombre): bool
     {
@@ -97,4 +111,6 @@ class PartidaModel extends Model
 
         return false;
     }
+
+
 }

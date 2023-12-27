@@ -45,7 +45,7 @@ class JugadorModel extends Model
      */
     public function getJugadores(): array
     {
-        $statement = $this->connection->query('SELECT id, nick FROM jugador');
+        $statement = $this->connection->query('SELECT id, nick,nombre,apellidos FROM jugador');
 
         return $statement->fetchAll(\PDO::FETCH_OBJ);
     }
@@ -69,6 +69,19 @@ class JugadorModel extends Model
 
 
         return false;
+
+    }
+
+
+    public function deleteJugador($nick): bool
+    {
+        try {
+            $statement = $this->connection->prepare('DELETE FROM jugador where nick = :nick');
+            $statement->bindParam(":nick", $nick);
+            return $statement->execute();
+        } catch (\PDOException) {
+            return false;
+        }
 
     }
 }

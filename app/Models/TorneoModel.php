@@ -35,8 +35,15 @@ class TorneoModel extends Model
 
     public function getTorneos(): array
     {
-        $statement = $this->connection->query('SELECT id, nombre FROM torneo');
+        $statement = $this->connection->query('SELECT id, nombre,fecha_inicio,fecha_fin FROM torneo');
 
         return $statement->fetchAll(\PDO::FETCH_OBJ);
+    }
+
+    public function deleteTorneo($id): bool
+    {
+        $statement = $this->connection->prepare('DELETE FROM torneo where id = :id');
+        $statement->bindParam(":id", $id);
+        return $statement->execute();
     }
 }

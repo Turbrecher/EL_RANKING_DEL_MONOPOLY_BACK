@@ -101,9 +101,9 @@ class FormController extends Controller
             $puntuacionTorneoModel->insertarPuntuacionTorneo($puntuacionTorneo);
 
         }
-
-
-        return $this->view('/puntuaciones/elegirTorneo');
+        $torneoModel = new TorneoModel();
+        $torneos = $torneoModel->getTorneos();
+        return $this->view('/puntuaciones/elegirTorneo', $torneos);
 
 
     }

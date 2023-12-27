@@ -62,4 +62,20 @@ class PuntuacionTorneoModel extends Model
 
         return $statement->fetchAll(\PDO::FETCH_OBJ);
     }
+
+    public function deletePuntuacionTorneo(string $nick_jugador, int $id_torneo = -1): bool
+    {
+        if ($id_torneo === -1) {
+            $statement = $this->connection->prepare('DELETE FROM puntuacion_torneo where nick_jugador = :nick_jugador');
+            $statement->bindParam(":nick_jugador", $nick_jugador);
+            return $statement->execute();
+        }
+
+        $statement = $this->connection->prepare('DELETE FROM puntuacion_torneo where nick_jugador = :nick_jugador and id_torneo = :id_torneo');
+        $statement->bindParam(":nick_jugador", $nick_jugador);
+        $statement->bindParam(":id_torneo", $id_torneo);
+        return $statement->execute();
+
+
+    }
 }
