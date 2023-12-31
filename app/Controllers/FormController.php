@@ -4,13 +4,11 @@ namespace App\Controllers;
 
 use \App\DataClasses\Jugador;
 use App\DataClasses\Partida;
-use App\DataClasses\PuntuacionPartida;
-use App\DataClasses\PuntuacionTorneo;
+use App\DataClasses\Puntuacion;
 use App\DataClasses\Torneo;
 use App\Models\JugadorModel;
 use App\Models\PartidaModel;
-use App\Models\PuntuacionPartidaModel;
-use App\Models\PuntuacionTorneoModel;
+use App\Models\PuntuacionModel;
 use App\Models\TorneoModel;
 use App\UsefulClasses\CalculadoraPuntos;
 use App\UsefulClasses\ContadorCoincidencias;
@@ -27,7 +25,11 @@ class FormController extends Controller
         $torneoModel = new TorneoModel();
         $torneos = $torneoModel->getTorneos();
 
-        return $this->view('formularios/crearPartida', $torneos);
+        $jugadorModel = new JugadorModel();
+        $nJugadores = count($jugadorModel->getJugadores());
+
+
+        return $this->view('formularios/crearPartida', [$torneos, $nJugadores]);
     }
 
     /**
@@ -48,9 +50,9 @@ class FormController extends Controller
             return $this->view("/error");
         }
 
-        //Intentamos crear la partida.
-        $partidaModel = new PartidaModel();
+        //Creamos objeto partida con los datos del POST.
         $partida = new Partida($_POST['nombre'], $_POST['fecha'], $_POST['1'], $_POST['torneo']);
+        $partidaModel = new PartidaModel();
 
         //Comprobamos que el jugador existe y lo almacenamos en un array de nicks.
         $jugadorModel = new JugadorModel();
@@ -58,7 +60,7 @@ class FormController extends Controller
         for ($i = 1; $i <= $_POST['nJugadores']; $i++) {
 
             if (!$jugadorModel->jugadorExiste($_POST[$i])) {
-                return $this->view("/error");;
+                return $this->view("/error");
             }
 
             $nicksJugadores[] = $_POST[$i];
@@ -76,6 +78,7 @@ class FormController extends Controller
             return $this->view("/error");
         }
 
+        //Intentamos insertar la partida en la base de datos.
         //Si hay alguna excepcion adicional al intentar insertarlo en la base de datos, vista de error de tambien.
         if (!$partidaModel->insertarPartida($partida)) {
             return $this->view("/error");
@@ -87,20 +90,15 @@ class FormController extends Controller
             //crear puntuacion partida por cada jugador.
             $nickJugador = $_POST[$i];
             $idPartida = $partidaModel->getIdPartida($_POST['nombre']);
+            $idTorneo = $_POST['torneo'];
             $puntos = CalculadoraPuntos::calcularPuntos($_POST['nJugadores'], $i);
 
-            $puntuacionPartida = new PuntuacionPartida($nickJugador, $idPartida, $puntos);
-
-            $puntuacionPartidaModel = new PuntuacionPartidaModel();
-            $puntuacionPartidaModel->insertarPuntuacionPartida($puntuacionPartida);
-
-            //actualizar puntuacion torneo.
-            $idTorneo = $_POST['torneo'];
-            $puntuacionTorneo = new PuntuacionTorneo($nickJugador, $idTorneo, $puntos);
-            $puntuacionTorneoModel = new PuntuacionTorneoModel();
-            $puntuacionTorneoModel->insertarPuntuacionTorneo($puntuacionTorneo);
+            $puntuacionModel = new PuntuacionModel();
+            $puntuacion = new Puntuacion($idTorneo, $idPartida, $nickJugador, $puntos);
+            $puntuacionModel->insertarPuntuacion($puntuacion);
 
         }
+        //AL TERMINAR DE INSERTAR LA NUEVA PARTIDA CON SUS PUNTUACIONES, REDIRIGIMOS A LA VISTA DE VISUALIZACION DE PUNTUACIONES.
         $torneoModel = new TorneoModel();
         $torneos = $torneoModel->getTorneos();
         return $this->view('/puntuaciones/elegirTorneo', $torneos);

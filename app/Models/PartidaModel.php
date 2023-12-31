@@ -48,6 +48,16 @@ class PartidaModel extends Model
         return $statement->fetch(\PDO::FETCH_NUM)[0];
     }
 
+    public function getNombrePartida(int $id_partida): string
+    {
+        $statement = $this->connection->prepare('SELECT nombre FROM partida WHERE id = :id_partida');
+        $statement->bindParam(":id_partida", $id_partida);
+        $statement->execute();
+
+        return $statement->fetch(\PDO::FETCH_DEFAULT)[0];
+
+    }
+
     /**
      * Metodo que obtiene todas las partidas del torneo con la id introducida como parametro.
      * @param int $idTorneo

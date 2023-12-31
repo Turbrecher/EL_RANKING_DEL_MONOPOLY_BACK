@@ -2,11 +2,9 @@
 
 namespace App\Controllers;
 
-use App\Controllers\Controller;
 use App\Models\JugadorModel;
 use App\Models\PartidaModel;
-use App\Models\PuntuacionPartidaModel;
-use App\Models\PuntuacionTorneoModel;
+use App\Models\PuntuacionModel;
 use App\Models\TorneoModel;
 
 class AdminController extends Controller
@@ -21,23 +19,19 @@ class AdminController extends Controller
         $jugadores = $jugadorModel->getJugadores();
         $torneos = $torneoModel->getTorneos();
 
-
         return $this->view('admin', [$partidas, $jugadores, $torneos]);
     }
 
     public function deleteJugador(string $nick): void
     {
-        $puntuacionPartidaModel = new PuntuacionPartidaModel();
-        $puntuacionTorneoModel = new PuntuacionTorneoModel();
+        $puntuacionModel = new PuntuacionModel();
+
         $jugadorModel = new JugadorModel();
 
-        if ($puntuacionPartidaModel->getPartidasJugadas($nick) > 0) {
+        if ($puntuacionModel->getNumeroPuntuaciones($nick) > 0) {
             $this->redirect('/error');
             return;
         }
-
-        $puntuacionPartidaModel->deletePuntuacionPartida($nick);
-        $puntuacionTorneoModel->deletePuntuacionTorneo($nick);
 
         if (!$jugadorModel->deleteJugador($nick)) {
             $this->redirect('/error');
@@ -65,8 +59,25 @@ class AdminController extends Controller
 
     }
 
-    public function deletePartida($id): string
+    public function deletePartida($id): void
     {
-        //Comprobamos
+
+        //Borramos todas las puntuaciones pertenecientes a la partida jugada.
+        $puntuacionModel = new PuntuacionModel();
+        if (!$puntuacionModel->deletePuntuacionPartida($id)) {
+            $this->redirect('/error');
+            return;
+        }
+
+
+        //Borramos la partida.
+        $partidaModel = new PartidaModel();
+
+        if (!$partidaModel->deletePartida($id)) {
+            $this->redirect('/error');
+            return;
+        }
+
+        $this->redirect('/admin');
     }
 }

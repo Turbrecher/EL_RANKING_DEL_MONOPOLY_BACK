@@ -33,13 +33,13 @@
 
                     <tbody>
                     <?php
-                    foreach ($data[0] as $jugador) {
+                    foreach ($data[0] as $puntuacionJugador) {
 
 
                         ?>
                         <tr>
-                            <td><?php echo $jugador->nick_jugador ?></td>
-                            <td><?php echo $jugador->puntos ?></td>
+                            <td><?php echo $puntuacionJugador->nick_jugador ?></td>
+                            <td><?php echo $puntuacionJugador->puntos ?></td>
                         </tr>
 
                         <?php

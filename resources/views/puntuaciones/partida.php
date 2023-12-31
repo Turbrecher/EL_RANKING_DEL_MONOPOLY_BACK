@@ -13,7 +13,7 @@
 
     <main>
         <div class="titulo">
-            <h1>PARTIDA 'Nombre Partida'</h1>
+            <h1><?php echo $data[1]?></h1>
         </div>
 
         <div class="partida">
@@ -32,7 +32,7 @@
                     <tbody>
 
                     <?php
-                    foreach ($data as $partida) {
+                    foreach ($data[0] as $partida) {
 
 
                         ?>
